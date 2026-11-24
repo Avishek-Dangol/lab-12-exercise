@@ -1,5 +1,16 @@
 ﻿Q3. What happens to the bounding boxes with update + fullRefit?
+Answer:
+update moves each circle by its direction of movement. 
+fullRefit does not rebuild the BVH. It only updates the bounding boxes so they still cover the circles that are already in each node. 
+Circles that started near each other can move apart, but they stay grouped together in the tree. 
+The bounding box around them stretches to keep covering all of them, so the boxes get bigger and overlap more. They still contain the circles.
 
 Q4. What happens with reset (rebuild every frame) instead?
+Answer:
+reset rebuilds the BVH from the circles current positions instead of only updating the bounding boxes. 
+Each frame the circles are grouped again based on where they are now. The bounding boxes stay tight around those circles, and the boxes change as the circles move, instead of stretching out.
 
 Q5. Why are some circles drawn with their sides cut off?
+Answer:
+A circle's center can be placed anywhere on the screen, including near the edge. If the center is closer to the edge than the radius, part of the circle hangs off the window. 
+Only pixels inside the screen are tested, so that part is never drawn and the side looks cut off.
